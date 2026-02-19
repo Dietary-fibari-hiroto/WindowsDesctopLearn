@@ -26,6 +26,29 @@ namespace WinUITestProject
         public MainWindow()
         {
             InitializeComponent();
+
+            var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(this);//Win32の世界のIDみたいなもの
+            var windowId = Microsoft.UI.Win32Interop.GetWindowIdFromWindow(hwnd);//上記をWinUIの世界で使えるIDに変換している
+            var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(windowId);
+            appWindow.Resize(new Windows.Graphics.SizeInt32(1200, 800));
+
+            Title = "TabSidebar Demo - WinUI3";
+
         }
+
+
+        private void SidebarNav_SelectionChanged(NavigationView sender,NavigationViewSelectionChangedEventArgs args)
+        {
+
+        }
+
+        private void MainTabView_AddTabButtonClick(TabView sender,object args)
+        {
+
+        }
+
+        private void MainTabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args) { }
+
+
     }
 }
