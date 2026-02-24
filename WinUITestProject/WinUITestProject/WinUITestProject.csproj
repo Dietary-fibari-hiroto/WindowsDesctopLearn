@@ -14,6 +14,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Pages\Building\BlankPage1.xaml" />
     <None Remove="Pages\DashboardPage.xaml" />
     <None Remove="Pages\FilesPage.xaml" />
     <None Remove="Pages\HelpPage.xaml" />
@@ -22,6 +23,7 @@
     <None Remove="Pages\TerminalPage.xaml" />
     <None Remove="Pages\WelcomePage.xaml" />
     <None Remove="Styles\Colors.xaml" />
+    <None Remove="Styles\Controls.xaml" />
     <None Remove="Styles\Fonts.xaml" />
   </ItemGroup>
 
@@ -50,6 +52,11 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.7705" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.8.260209005" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Styles\Controls.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Styles\Fonts.xaml">
@@ -93,6 +100,11 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="Styles\Colors.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\Building\BlankPage1.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

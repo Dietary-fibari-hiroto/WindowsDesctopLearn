@@ -8,7 +8,53 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid>
+    <Page.Resources>
+        <Style TargetType="AppBarElementContainer">
+            <Setter Property="Foreground" Value="Black" />
+        </Style>
+    </Page.Resources>
 
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <CommandBar Grid.Row="0" DefaultLabelPosition="Right" IsOpen="True">
+            <AppBarButton Icon="Save" Label="保存" Click="Save_Click" />
+            <AppBarButton Icon="Delete" Label="クリア" Click="Clear_Click"/>
+            <AppBarButton Icon="Copy" Label="コピー" Click="Copy_Click"/>
+        </CommandBar>
+
+
+        <TextBox
+            x:Name="EditorBox"
+            Grid.Row="1"
+            AcceptsReturn="True"
+            TextWrapping="Wrap"
+            PlaceholderText="ここにメモを入力..."
+            Background="White"
+            Foreground="Black"
+            PlaceholderForeground="Black"
+            FontFamily="Cascadia Code, Consolas, monospace"
+            FontSize="{StaticResource TextBase}"
+            Margin="0,8,0,8"
+            TextChanged="EditorBox_TextChanged"/>
+
+        <Border Grid.Row="2"
+                Background="{StaticResource SurfaceBrush}"
+                Padding="12,6" CornerRadius="4">
+            <StackPanel Orientation="Horizontal" Spacing="16">
+                <TextBlock x:Name="CharCountText" Text="文字数: 0"
+                           Style="{StaticResource CaptionTextBlockStyle}" />
+                <TextBlock x:Name="LineCountText" Text="行数: 1"
+                           Style="{StaticResource CaptionTextBlockStyle}" />
+                <TextBlock x:Name="StatusText" Text=""
+                           Style="{StaticResource CaptionTextBlockStyle}"
+                           Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}" />
+            </StackPanel>
+        </Border>
+        
     </Grid>
 </Page>

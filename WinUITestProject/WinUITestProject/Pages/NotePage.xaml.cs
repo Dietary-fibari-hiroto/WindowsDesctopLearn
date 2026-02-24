@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 
@@ -27,5 +28,32 @@ namespace WinUITestProject.Pages
         {
             InitializeComponent();
         }
+
+        private void Save_Click(object sender,RoutedEventArgs args)
+        {
+            StatusText.Text = "☑保存しました(デモ)";
+        }
+
+        private void Clear_Click(object sender, RoutedEventArgs args)
+        {
+            EditorBox.Text = string.Empty;
+            StatusText.Text = "クリアしました。";
+        }
+
+        private void Copy_Click(object sender, RoutedEventArgs args) {
+            var dp = new DataPackage();
+            dp.SetText(EditorBox.Text);
+            Clipboard.SetContent(dp);
+            StatusText.Text = "☑コピーしました。";
+
+        }
+
+        private void EditorBox_TextChanged(object sender, TextChangedEventArgs args)
+        {
+            var text = EditorBox.Text;
+            CharCountText.Text = $"文字数: {text.Length}";
+            LineCountText.Text = $"行数: {text.Split('\n').Length}";
+        }
+
     }
 }

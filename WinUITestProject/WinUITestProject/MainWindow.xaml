@@ -8,6 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ext="using:WinUITestProject.Extensions"
     xmlns:pages="using:WinUITestProject.Pages"
+    xmlns:building="using:WinUITestProject.Pages.Building"
     mc:Ignorable="d"
     Title="WinUITestProject">
 
@@ -86,7 +87,10 @@
                         <TabViewItem Header="メモ1" IconSource="{ext:SymbolIconSource Symbol=Edit}">
                             <pages:NotePage/>
                         </TabViewItem>
-                        
+                        <TabViewItem Header="Building1" IconSource="{ext:SymbolIconSource Symbol=AddFriend}" IsClosable="True">
+                            <building:BlankPage1/>
+                        </TabViewItem>
+
                     </TabView.TabItems>
                 </TabView>
                 
