@@ -6,7 +6,7 @@ namespace WinUITestProject.Infrastructure.Entities
     {
         public int FolderId { get; set; }
         public Folder? Folder { get; set; }
-        public int NoteId { get; set; }
+        public NoteId NoteId { get; set; }
         public Note? Note { get; set; }
     }
 }

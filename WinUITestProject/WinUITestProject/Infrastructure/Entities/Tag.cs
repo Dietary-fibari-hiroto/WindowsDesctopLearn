@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WinUITestProject.Infrastructure.Entities
@@ -11,6 +12,9 @@ namespace WinUITestProject.Infrastructure.Entities
 
         public string Name { get; set; } = null!;
         public string Color { get; set; } = "ffffff";
+
+
+        public List<NoteTag>? NoteTags { get; set; }
 
     }
 }

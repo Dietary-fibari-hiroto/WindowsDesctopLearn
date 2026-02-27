@@ -17,7 +17,10 @@ namespace WinUITestProject.Infrastructure.Data
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         public DbSet<Note> Notes => Set<Note>();
+        public DbSet<Tag> Tags => Set<Tag>();
         public DbSet<Folder> Foldrs => Set<Folder>();
+        public DbSet<NoteTag> NoteTags => Set<NoteTag>();
+        public DbSet<FolderNote> FolderNotes => Set<FolderNote>();
 
         protected override void OnConfiguring(DbContextOptionsBuilder opt) {
             
@@ -28,7 +31,7 @@ namespace WinUITestProject.Infrastructure.Data
             Directory.CreateDirectory(appDir);//directoryがなかったら作る
 
             var dbPath = Path.Combine(appDir, "notes.db");
-            opt.UseSqlite($"Data Source{dbPath}");
+            opt.UseSqlite($"Data Source={dbPath}");
 
 
             opt.LogTo(Console.WriteLine, Microsoft.Extensions.Logging.LogLevel.Information);
@@ -53,16 +56,66 @@ namespace WinUITestProject.Infrastructure.Data
 
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Note>(builder =>
+            {
+                builder.Property(n => n.Id)
+                .ValueGeneratedOnAdd()
+                .HasConversion(
+                    id => id.Value,
+                    value => new NoteId(value)
+                    );
+                builder.Property(n => n.Title)
+                .HasMaxLength(255);
+                builder.Property(n => n.IsPinned)
+                .HasDefaultValue(false);
+            });
+
+            modelBuilder.Entity<Tag>(builder =>
+            {
+                builder.Property(t => t.Name)
+                .HasMaxLength(50);
+                builder.HasIndex(t => t.Name)
+                .IsUnique();
+            });
+
             modelBuilder.Entity<NoteTag>(builder =>
             {
                 builder.HasKey(nt => new { nt.TagId, nt.NoteId });
 
+                builder.HasOne(nt => nt.Note)
+                .WithMany(n => n.NoteTags)
+                .HasForeignKey(nt => nt.NoteId)
+                .OnDelete(DeleteBehavior.Cascade);
 
-
-
-
+                builder.HasOne(nt => nt.Tag)
+                .WithMany(t => t.NoteTags)
+                .HasForeignKey(nt => nt.TagId)
+                .OnDelete(DeleteBehavior.Cascade);
             });
-            modelBuilder.Entity<FolderNote>().HasKey(p => new { p.FolderId, p.NoteId });
+
+            modelBuilder.Entity<Folder>(builder =>
+            {
+                builder.Property(f => f.Name)
+                .HasMaxLength(255);
+                builder.HasIndex(f => f.Name)
+                .IsUnique();
+            });
+
+            modelBuilder.Entity<FolderNote>(builder =>
+            {
+                builder.HasKey(fn => new { fn.FolderId, fn.NoteId });
+
+                builder.HasOne(fn => fn.Folder)
+                .WithMany(f => f.FolderNotes)
+                .HasForeignKey(fn => fn.FolderId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+                builder.HasOne(fn => fn.Note)
+                .WithMany(n => n.FolderNotes)
+                .HasForeignKey(fn => fn.NoteId)
+                .OnDelete(DeleteBehavior.Cascade);
+            });
+
 
         }
 
