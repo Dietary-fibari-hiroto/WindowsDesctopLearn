@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window
+    x:Class="WinUITestProject.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WinUITestProject"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ext="using:WinUITestProject.Extensions"
+    xmlns:pages="using:WinUITestProject.Pages"
+    xmlns:components="using:WinUITestProject.Components"
+    xmlns:building="using:WinUITestProject.Pages.Building"
+    mc:Ignorable="d"
+    Title="WinUITestProject">
+
+    <Window.SystemBackdrop>
+        <MicaBackdrop />
+    </Window.SystemBackdrop>
+
+    <Grid>
+        <NavigationView
+            x:Name="SidebarNav"
+            Grid.Column="0"
+            IsPaneToggleButtonVisible="True"
+            IsBackButtonVisible="Collapsed"
+            PaneDisplayMode="Left"
+            OpenPaneLength="240"
+            CompactPaneLength="60"
+            IsSettingsVisible="True"
+            SelectionChanged="SidebarNav_SelectionChanged"
+            PaneTitle="メニュー"
+            Background="{StaticResource PrimaryBrush}">
+            <NavigationView.MenuItems>
+                <NavigationViewItem Content="ホーム" Tag="Home" Icon="Home" />
+                <NavigationViewItem Content="ダッシュボード" Tag="Dashboard" Icon="View"/>
+                <NavigationViewItemSeparator/>
+                <NavigationViewItemHeader Content="ツール"/>
+                <NavigationViewItem Content="エディタ" Tag="Editor" Icon="Edit"/>
+                <NavigationViewItem Content="ファイル" Tag="Files" Icon="Document"/>
+                <NavigationViewItem Content="ノート一覧" Tag="NoteList" Icon="Document"/>
+                <NavigationViewItem Content="ターミナル" Tag="Terminal">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE756;" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+            </NavigationView.MenuItems>
+
+            <NavigationView.FooterMenuItems>
+                <NavigationViewItem Content="ヘルプ" Tag="Help" Icon="Help"/>
+            </NavigationView.FooterMenuItems>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="1"
+              Background="{StaticResource BackgroundBrush}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Border
+                    Grid.Row="0"
+                    Background="{StaticResource SurfaceBrush}"
+                    Padding="16,8"
+                    BorderBrush="{StaticResource BorderBrush}"
+                    BorderThickness="0,0,0,1">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <FontIcon Glyph="&#xE8A5;" FontSize="14"
+                                  Foreground="{StaticResource AccentBrush}"/>
+                            <TextBlock x:Name="SidebarStatusText"
+                                   Text="サイドバー：ホーム"
+                                   Foreground="{StaticResource SecondaryBrush}"
+                                   VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+
+
+
+                    <TabView
+                    x:Name="MainTabView"
+                    Grid.Row="1"
+                    AddTabButtonClick="MainTabView_AddTabButtonClick"
+                    TabCloseRequested="MainTabView_TabCloseRequested"
+                    IsAddTabButtonVisible="True"
+                    CanDragTabs="True"
+                    CanReorderTabs="True"
+                    TabWidthMode="SizeToContent"
+                    VerticalAlignment="Stretch"
+                    Background="Black"
+                    >
+
+                        <TabView.TabItems>
+                            <TabViewItem Header="ようこそ" IconSource="{ext:SymbolIconSource Symbol=Home}" IsClosable="False">
+                                <pages:WelcomePage/>
+                            </TabViewItem>
+                            <TabViewItem Header="メモ1" IconSource="{ext:SymbolIconSource Symbol=Edit}">
+                                <pages:NotePage/>
+                            </TabViewItem>
+                            <TabViewItem Header="Building1" IconSource="{ext:SymbolIconSource Symbol=AddFriend}" IsClosable="True">
+                                <building:BlankPage1/>
+                            </TabViewItem>
+
+                        </TabView.TabItems>
+                    </TabView>
+
+
+                </Grid>
+            </Grid>
+        </NavigationView>
+    </Grid>
+</Window>

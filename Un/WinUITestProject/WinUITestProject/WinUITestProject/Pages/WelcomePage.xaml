@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="WinUITestProject.Pages.WelcomePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WinUITestProject.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    
+    <Page.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground"
+                    Value="{StaticResource AccentStrongBrush}"/>
+            <Setter Property="FontSize" Value="{StaticResource TextBase}"/>
+        </Style>
+    </Page.Resources>
+
+    <ScrollViewer Padding="32">
+        <StackPanel Spacing="24" MaxWidth="700" HorizontalAlignment="Left">
+            <TextBlock Text="👋 ようこそ！" Foreground="{StaticResource AccentStrongBrush}" FontSize="{StaticResource Text5Xl}"/>
+            <TextBlock TextWrapping="Wrap" Foreground="{StaticResource AccentStrongBrush}" >
+                WinUI3のTabViewとNavigationViewを組み合わせたデモアプリです。
+            </TextBlock>
+
+            <Border Background="{StaticResource SurfaceBrush}"
+                    CornerRadius="8" Padding="20"
+                    BorderBrush="{StaticResource BorderBrush}"
+                    BorderThickness="1"
+                   >
+                <StackPanel Spacing="12">
+                    <TextBlock Text="機能一覧" FontSize="{StaticResource Text2Xl}"/>
+                    <TextBlock TextWrapping="Wrap">• サイドバーからページを切り替え</TextBlock>
+                    <TextBlock TextWrapping="Wrap">• ＋ボタンで新しいメモタブを追加</TextBlock>
+                    <TextBlock TextWrapping="Wrap">• タブのドラッグ＆ドロップ並べ替え</TextBlock>
+                    <TextBlock TextWrapping="Wrap">• タブの閉じるボタン（ようこそタブは閉じられない）</TextBlock>
+                    <TextBlock TextWrapping="Wrap">• サイドバーの折りたたみ（☰ボタン）</TextBlock>
+
+                </StackPanel>
+            </Border>
+            
+            
+        </StackPanel>
+    </ScrollViewer>
+</Page>

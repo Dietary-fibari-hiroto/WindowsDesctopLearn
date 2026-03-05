@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="WinUITestProject.Pages.DashboardPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WinUITestProject.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="{StaticResource TextBase}"/>
+            <Setter Property="Foreground" Value="{StaticResource AccentBrush}"/>
+        </Style>
+    </Page.Resources>
+
+
+    <ScrollViewer Padding="32">
+        <StackPanel Spacing="20" MaxWidth="800" HorizontalAlignment="Left">
+            <TextBlock Text="📊 ダッシュボード" FontSize="{StaticResource Text3Xl}" />
+            <StackPanel Orientation="Horizontal" Spacing="16">
+                <Border Background="{StaticResource SurfaceBrush}"
+                        CornerRadius="8" Padding="24" MinWidth="160">
+                    <StackPanel>
+                        <TextBlock Text="42" FontSize="36" FontWeight="Bold" Opacity="0.8"/>
+                        <TextBlock Text="タスク完了"/>
+                    </StackPanel>
+                </Border>
+                <Border Background="{StaticResource SurfaceBrush}"
+                        CornerRadius="8" Padding="24" MinWidth="160"
+                        BorderBrush="{StaticResource BorderBrush}"
+                        BorderThickness="1">
+                    <StackPanel>
+                        <TextBlock Text="7" FontSize="{StaticResource Text3Xl}" FontWeight="Bold"/>
+                        <TextBlock Text="進行中"/>
+                    </StackPanel>
+                </Border>
+                <Border Background="{StaticResource SurfaceBrush}"
+                        CornerRadius="8" Padding="24" MinWidth="160"
+                        BorderBrush="{StaticResource BorderBrush}"
+                        BorderThickness="1">
+                    <StackPanel>
+                        <TextBlock Text="3" FontSize="36" FontWeight="Bold" />
+                        <TextBlock Text="保留中" />
+                    </StackPanel>
+                </Border>
+
+            </StackPanel>
+
+            <Border Background="{StaticResource SurfaceBrush}"
+                    CornerRadius="8" Padding="20"
+                    BorderBrush="{StaticResource BorderBrush}"
+                    BorderThickness="1">
+                <StackPanel Spacing="12">
+                    <TextBlock Text="プロジェクト進捗" FontSize="{StaticResource Text3Xl}" />
+                    <TextBlock Text="JamBubble v2.0" />
+                    <ProgressBar Value="75" Maximum="100"/>
+                    <TextBlock Text="owl-bin リリース準備" />
+                    <ProgressBar Value="45" Maximum="100" />
+                    <TextBlock Text="Rumos IoT 統合テスト" />
+                    <ProgressBar Value="90" Maximum="100" />
+
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+                  
+</Page>

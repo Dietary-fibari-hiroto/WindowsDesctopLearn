@@ -13,6 +13,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using WinUITestProject.ViewModels;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -24,36 +25,40 @@ namespace WinUITestProject.Pages
     /// </summary>
     public sealed partial class NotePage : Page
     {
+        public NoteViewModel ViewModel { get; }
         public NotePage()
         {
             InitializeComponent();
+            ViewModel = new NoteViewModel();
+            _ = ViewModel.CreateNewAsync();
         }
 
-        private void Save_Click(object sender,RoutedEventArgs args)
-        {
-            StatusText.Text = "☑保存しました(デモ)";
+        public NotePage(int noteId) {
+            InitializeComponent();
+            ViewModel = new NoteViewModel();
+            _ = ViewModel.LoadAsync(noteId);
         }
 
-        private void Clear_Click(object sender, RoutedEventArgs args)
-        {
-            EditorBox.Text = string.Empty;
-            StatusText.Text = "クリアしました。";
-        }
+        private async void Save_Click(object sender,RoutedEventArgs args)=>
+            await ViewModel.ForceSaveAsync();
+
+        
+
 
         private void Copy_Click(object sender, RoutedEventArgs args) {
             var dp = new DataPackage();
-            dp.SetText(EditorBox.Text);
+            dp.SetText(ViewModel.Content);
             Clipboard.SetContent(dp);
-            StatusText.Text = "☑コピーしました。";
+            ViewModel.StatusText = "☑コピーしました。";
 
         }
 
-        private void EditorBox_TextChanged(object sender, TextChangedEventArgs args)
-        {
-            var text = EditorBox.Text;
-            CharCountText.Text = $"文字数: {text.Length}";
-            LineCountText.Text = $"行数: {text.Split('\n').Length}";
+
+        private void Clear_Click(object sender, RoutedEventArgs args) {
+            ViewModel.Content = "";
+            ViewModel.StatusText = "クリアしました。";
         }
+
 
     }
 }

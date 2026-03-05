@@ -2,7 +2,12 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Xaml;
 using System;
+using System.IO;
+using WinUITestProject.Application.Services;
+using WinUITestProject.Core.Interfaces.Repositories;
+using WinUITestProject.Core.Interfaces.Services;
 using WinUITestProject.Infrastructure.Data;
+using WinUITestProject.Infrastructure.Repositories;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -12,7 +17,7 @@ namespace WinUITestProject
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
-    public partial class App : Application
+    public partial class App : Microsoft.UI.Xaml.Application
     {
         public static Window? _window{ get; private set; }
 
@@ -36,19 +41,37 @@ namespace WinUITestProject
 
             SQLitePCL.Batteries.Init();
 
-            sc.AddDbContext<AppDbContext>(ServiceLifetime.Transient);
+            sc.AddDbContext<AppDbContext>(options =>
+            {
+                var appDir = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                    "TabSidebarDemo"
+                );
+
+                Directory.CreateDirectory(appDir);
+
+                var dbPath = Path.Combine(appDir, "notes.db");
+
+                options.UseSqlite($"Data Source={dbPath}");
+            });
+
+            sc.AddSingleton<INoteRepository, NoteRepository>();
+
+            sc.AddSingleton<INoteService, NoteService>();
+
 
             Services = sc.BuildServiceProvider();
 
-            using (var db = Services.GetRequiredService<AppDbContext>())
+            using (var scope = Services.CreateScope())
             {
+                var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
                 db.Database.Migrate();
             }
 
-           
 
 
-                _window = new MainWindow();
+
+            _window = new MainWindow();
             _window.Activate();
         }
 

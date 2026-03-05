@@ -12,25 +12,34 @@
         <Style TargetType="AppBarElementContainer">
             <Setter Property="Foreground" Value="Black" />
         </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="Black"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Foreground" Value="Black"/>
+        </Style>
     </Page.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <CommandBar Grid.Row="0" DefaultLabelPosition="Right" IsOpen="True">
+        <CommandBar Background="Black" Grid.Row="0" DefaultLabelPosition="Right" IsOpen="True">
             <AppBarButton Icon="Save" Label="保存" Click="Save_Click" />
             <AppBarButton Icon="Delete" Label="クリア" Click="Clear_Click"/>
             <AppBarButton Icon="Copy" Label="コピー" Click="Copy_Click"/>
         </CommandBar>
 
+        <TextBox Grid.Row="1"
+    Text="{x:Bind ViewModel.Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
         <TextBox
             x:Name="EditorBox"
-            Grid.Row="1"
+            Grid.Row="2"
             AcceptsReturn="True"
             TextWrapping="Wrap"
             PlaceholderText="ここにメモを入力..."
@@ -40,19 +49,25 @@
             FontFamily="Cascadia Code, Consolas, monospace"
             FontSize="{StaticResource TextBase}"
             Margin="0,8,0,8"
-            TextChanged="EditorBox_TextChanged"/>
+            Text="{x:Bind ViewModel.Content, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"     
+            />
 
-        <Border Grid.Row="2"
+        <Border Grid.Row="3"
                 Background="{StaticResource SurfaceBrush}"
                 Padding="12,6" CornerRadius="4">
             <StackPanel Orientation="Horizontal" Spacing="16">
-                <TextBlock x:Name="CharCountText" Text="文字数: 0"
+                <TextBlock x:Name="CharCountText" 
+                           Text="{x:Bind ViewModel.CharCount,Mode=OneWay}"
                            Style="{StaticResource CaptionTextBlockStyle}" />
-                <TextBlock x:Name="LineCountText" Text="行数: 1"
+                <TextBlock x:Name="LineCountText" 
+                           Text="{x:Bind ViewModel.LineCount,Mode=OneWay}"
                            Style="{StaticResource CaptionTextBlockStyle}" />
-                <TextBlock x:Name="StatusText" Text=""
+                <TextBlock x:Name="StatusText" 
+                           Text="{x:Bind ViewModel.StatusText,Mode=OneWay}"
                            Style="{StaticResource CaptionTextBlockStyle}"
                            Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}" />
+                <ProgressRing IsActive="{x:Bind ViewModel.IsSaving, Mode=OneWay}" Width="14" Height="14" />
+
             </StackPanel>
         </Border>
         

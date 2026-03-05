@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl
+    x:Class="WinUITestProject.Components.NoteCard"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WinUITestProject.Components"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Button
+    x:Name="CardButton"
+        Click="CardButton_Click"
+        HorizontalAlignment="Stretch"
+        HorizontalContentAlignment="Stretch"
+        Padding="0"
+        Background="Transparent"
+        BorderThickness="0"
+        CornerRadius="8">
+
+    <Border
+            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+            BorderThickness="1"
+            CornerRadius="8"
+            Padding="16"
+            PointerEntered="Border_PointerEntered"
+            PointerExited="Border_PointerExited">
+
+        <Grid ColumnSpacing="12">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" Spacing="6">
+                <!-- タイトル -->
+                <TextBlock
+                        x:Name="TitleText"
+                        Text="無題のメモ"
+                        Style="{StaticResource BodyStrongTextBlockStyle}"
+                        TextTrimming="CharacterEllipsis"
+                        MaxLines="1" />
+
+                <!-- 本文プレビュー -->
+                <TextBlock
+                        x:Name="PreviewText"
+                        Text=""
+                        Style="{StaticResource CaptionTextBlockStyle}"
+                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                        TextTrimming="CharacterEllipsis"
+                        MaxLines="2"
+                        TextWrapping="Wrap" />
+
+                <!-- 更新日時 -->
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <FontIcon
+                            Glyph="&#xE823;"
+                            FontSize="12"
+                            Foreground="{ThemeResource TextFillColorTertiaryBrush}" />
+                    <TextBlock
+                            x:Name="DateText"
+                            Text=""
+                            Style="{StaticResource CaptionTextBlockStyle}"
+                            Foreground="{ThemeResource TextFillColorTertiaryBrush}" />
+                </StackPanel>
+            </StackPanel>
+
+            <!-- 右側: ピン & 削除 -->
+            <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="4">
+                <Button
+                        x:Name="PinButton"
+                        Click="PinButton_Click"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Padding="6"
+                        ToolTipService.ToolTip="ピン止め">
+                    <FontIcon x:Name="PinIcon" Glyph="&#xE718;" FontSize="14" />
+                </Button>
+                <Button
+                        Click="DeleteButton_Click"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Padding="6"
+                        ToolTipService.ToolTip="削除">
+                    <FontIcon Glyph="&#xE74D;" FontSize="14"
+                                  Foreground="{ThemeResource SystemFillColorCriticalBrush}" />
+                </Button>
+            </StackPanel>
+        </Grid>
+    </Border>
+    </Button>
+</UserControl>
